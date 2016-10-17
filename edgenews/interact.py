@@ -14,7 +14,7 @@ class UserManager:
             msg = 'invalid input'
 
         elif not core.is_valid_user(user):
-            msg = 'invalid input'
+            msg = 'couldnt prepare user'
 
         exists, exist_msg = self.user_exists(user)
         if exists:
@@ -24,7 +24,6 @@ class UserManager:
                 stored = self._repo.save(user)
                 msg = 'ok'
             except Exception as e:
-                stored = None
                 msg = str(e)
 
         return stored, msg
@@ -59,10 +58,11 @@ class UserManager:
         user, msg = self.get_user(name)
         if msg is 'ok':
             try:
-                authenticated = core.authenticate_user(user, password)
+                user = core.authenticate_user(user, password)
             except ValueError as e:
-                msg = str(e)
-        return authenticated, msg
+                user = None
+                msg = 'could not authenticate'
+        return user, msg
 
     def list_users(self):
         try:

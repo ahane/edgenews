@@ -37,6 +37,13 @@ def test_authenticate_user(some_new_user, user_store):
     assert user
     assert msg == 'ok'
 
+
+def test_authenticate_user_fail(some_new_user, user_store):
+    name, pwd = some_new_user['name'], 'wrongpassword'
+    user, msg = interact.UserManager().authenticate_user(name, pwd)
+    assert user == None
+    assert msg == 'could not authenticate'
+
 def test_list_users(some_new_user, user_store):
     users, msg = interact.UserManager().list_users()
     assert len(user_store._records) == 1

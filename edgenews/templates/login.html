@@ -1,14 +1,8 @@
-{% if msg %}
-  {{ msg }}
-{% endif %}
-
 <form method="POST">
   {{ form.csrf_token }}
   {{ form.name.label }}: {{ form.name }}
   <br />
-  {{ form.email.label }}: {{ form.email }}
-  <br />
   {{ form.plain_password.label }}: {{ form.plain_password }}
   <br />
-  <input type="submit" name="signup"/>
+  <input type="submit" />
 </form>

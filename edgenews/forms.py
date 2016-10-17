@@ -6,3 +6,7 @@ class SignupForm(Form):
     name = TextField('name', validators=[DataRequired()])
     email = TextField('email', validators=[DataRequired()])
     plain_password = PasswordField('plain_password', validators=[DataRequired()])
+
+class LoginForm(Form):
+    name = TextField('name', validators=[DataRequired()])
+    plain_password = PasswordField('plain_password', validators=[DataRequired()])
