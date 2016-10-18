@@ -9,11 +9,12 @@ class UserManager:
     def create_user(self, new_user):
         stored = None
 
-        user = core.prepare_user(new_user)
         if not core.is_valid_new_user(new_user):
             msg = 'invalid input'
 
-        elif not core.is_valid_user(user):
+        user = core.prepare_user(new_user)
+        
+        if not core.is_valid_user(user):
             msg = 'couldnt prepare user'
 
         exists, exist_msg = self.user_exists(user)

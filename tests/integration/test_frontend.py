@@ -15,6 +15,8 @@ def driver():
     yield driver
     driver.close()
 
+@pytest.mark.integration
+@pytest.mark.frontend
 def test_signup(driver):
     driver.get("localhost:5000/signup")
     driver.find_element_by_name("name").send_keys("some-user-name")
@@ -23,6 +25,9 @@ def test_signup(driver):
     driver.find_element_by_name("signup").send_keys(Keys.ENTER)
     assert "Welcome some-user-name" in driver.page_source
 
+
+@pytest.mark.integration
+@pytest.mark.frontend
 def test_signup_again(driver):
     driver.get("localhost:5000/signup")
     driver.find_element_by_name("name").send_keys("some-user-name")

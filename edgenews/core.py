@@ -1,65 +1,56 @@
 # -*- coding: utf-8 -*-
 import voluptuous as schema
 from voluptuous.humanize import humanize_error
+from marshmallow import Schema, fields, validate
 from datetime import datetime
 import uuid
 import hashlib
 
-base_user_schema = {
-    schema.Required('name'): schema.All(str, schema.Length(min=1, max=255)),
-    schema.Required('email'): schema.All(
-        str,
-        schema.Length(min=1, max=255),
-        schema.Email(schema.All(str, schema.Length(min=1, max=255))))
-}
-base_user_validator = schema.Schema(base_user_schema)
 
-new_user_schema = {
-    schema.Required('plain_password'): schema.All(str, schema.Length(min=1, max=255))
-}
-new_user_validator = schema.Schema(base_user_schema).extend(new_user_schema)
+class BaseUserSchema(Schema):
+    name = fields.String(required=True,
+                         validate=[validate.Length(min=1, max=255)])
+    email = fields.Email(required=True,
+                         validate=[validate.Length(min=1, max=255)])
 
-user_schema = {
-    schema.Required('salt'): schema.All(bytes, schema.Length(min=16, max=16)),
-    schema.Required('hashed_password'): schema.All(bytes, schema.Length(min=32, max=32)),
-    schema.Required('is_active'): bool,
-    schema.Required('is_anonymous'): bool,
-}
-user_validator = schema.Schema(base_user_schema).extend(user_schema)
+class NewUserSchema(BaseUserSchema):
+    plain_password = fields.String(required=True,
+                                   validate=[validate.Length(min=1, max=255)])
+
+class UserSchema(BaseUserSchema):
+    salt = fields.String(required=True)
+    hashed_password = fields.String(required=True)
+    is_active = fields.Bool(required=True)
 
 
 def _is_valid(record, validator):
     """
     Returns: bool
     """
-    try:
-        validated = validator(record)
-        is_valid = True
-    except (schema.Invalid, schema.MultipleInvalid) as e:
-        print(e.msg)
-        is_valid = False
+    data, errors = validator(record)
+    is_valid = (errors == {})
     return is_valid
 
 def is_valid_new_user(user):
     """
     Returns: bool
     """
-    return _is_valid(user, new_user_validator)
+    return _is_valid(user, NewUserSchema().load)
 
 def is_valid_user(user):
-    return _is_valid(user, user_validator)
+    return _is_valid(user, UserSchema().load)
 
 
-def _sha256hash(bytes):
+def _sha256hash(string):
     hasher = hashlib.sha256()
-    hasher.update(bytes)
-    hashed = hasher.digest()
+    hasher.update(string.encode('utf-8'))
+    hashed = hasher.digest().hex()
     return hashed
 
 def _hash_with_salt(password, salt=None):
     if salt is None:
-        salt = uuid.uuid4().bytes
-    full = password.encode('utf-8') + salt
+        salt = uuid.uuid4().hex
+    full = password + salt
     hashed = _sha256hash(full)
     return hashed, salt
 
