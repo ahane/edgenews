@@ -1,4 +1,5 @@
 from flask import Flask
+
 def create_app():
     print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
     app = Flask(__name__)
@@ -10,9 +11,8 @@ def create_app():
     # import flask_login
     # login_manager = flask_login.LoginManager()
     # login_manager.init_app(app)
-    from edgenews.views import api
-    app.register_blueprint(api)
-    #from edgenews import views
-    #from edgenews import models
-
+    from edgenews import frontend
+    from edgenews import api
+    app.register_blueprint(frontend.blueprint)
+    app.register_blueprint(api.blueprint)
     return app
