@@ -1,9 +1,9 @@
 import flask
-from flask_restful import Resource, Api
-
+from flask_restful import Resource, Api, fields, marshal
+import marshmallow_jsonapi as marsh
 from edgenews import interact
 from edgenews.core.user import BaseUserSchema
-from edgenews.api.serialize import as_jsonapi_and_statuscode
+from edgenews.api import serialize
 blueprint = flask.Blueprint('api', __name__, url_prefix='/api/v1')
 api_object = Api(blueprint)
 user_manager = interact.UserManager()
@@ -19,31 +19,37 @@ class ApiResource(Resource):
                 {'users':
                 api_object.url_for(UsersResource)}}
 
+
+
+
 class UsersResource(Resource):
 
-    @as_jsonapi_and_statuscode(id_field='name', type_='users', fields=['name', 'email'])
     def get(self):
-        return user_manager.list_users()
+        serialized = serialize.users(user_manager.list_users())
 
+        return serialized
 
-    @as_jsonapi_and_statuscode(id_field='name', type_='users', fields=['name', 'email'])
     def post(self):
-        return user_manager.create_user(flask.request.get_json())
+        serialized = serialize.users(user_manager.create_user(flask.request.get_json()))
+        return serialized
+
+
+
 
 
 class UserResource(Resource):
 
+    def get(self, name):
+        serialized = serialize.users(user_manager.get_user(name))
+        return serialized
 
-
-    @as_jsonapi_and_statuscode(id_field='name', type_='users', fields=['name', 'email'])
-    def get(self, user_id):
-        return user_manager.get_user(user_id)
 
 api_object.add_resource(ApiResource, '/')
 
-api_object.add_resource(UsersResource, '/users')
+api_object.add_resource(UsersResource, '/users', endpoint='users_resource')
 
-api_object.add_resource(UserResource, '/users/<string:user_id>')
+api_object.add_resource(UserResource, '/users/<string:name>', endpoint='user_resource')
+
 
 
 def _serialize(record, schema):
