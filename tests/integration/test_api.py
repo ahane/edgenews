@@ -48,14 +48,15 @@ def test_users_empty(url, users_endpoint):
     response = requests.get(url+users_endpoint)
     assert response.status_code == 200
     actual = response.json()
-    expected = {'data': []}
+    expected = {'data': [],
+                'links': {'self': '/api/v1/users'}}
     assert actual == expected
 
 @pytest.fixture
 def headers():
     return {'Content-Type': 'application/json'}
 
-#from ..test_core import some_new_user
+
 @pytest.fixture
 def some_new_user():
     return {'name': 'bert', 'email': 'a@example.com', 'plain_password': 'abc'}
@@ -75,6 +76,19 @@ def some_new_user_response(some_new_user, users_endpoint):
                 {'name': 'bert',
                  'email': 'a@example.com'}
             }}
+
+@pytest.fixture
+def all_users_response(some_new_user, users_endpoint):
+    return {'links': {'self': '/api/v1/users'},
+            'data': [
+                {'type': 'users',
+                 'id': 'bert',
+                 'links': {'self': '/api/v1/users/bert'},
+                 'attributes':
+                    {'name': 'bert',
+                     'email': 'a@example.com'}
+                }]
+            }
 
 @pytest.mark.integration
 @pytest.mark.api
@@ -100,4 +114,14 @@ def test_get_user(url, users_endpoint,
     assert response.status_code == 200
     actual = response.json()
     expected = some_new_user_response
+    assert actual == expected
+
+@pytest.mark.integration
+@pytest.mark.api
+def test_get_users(url, users_endpoint,
+                   all_users_response):
+    response = requests.get(url + users_endpoint)
+    assert response.status_code == 200
+    actual = response.json()
+    expected = all_users_response
     assert actual == expected

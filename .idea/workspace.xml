@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9513ced-e567-4332-b6a2-bd1fc5a30dde" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/edgenews/api/resources.py" afterPath="$PROJECT_DIR$/edgenews/api/resources.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/edgenews/api/serialize.py" afterPath="$PROJECT_DIR$/edgenews/api/serialize.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/integration/test_api.py" afterPath="$PROJECT_DIR$/tests/integration/test_api.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_serialize.py" afterPath="$PROJECT_DIR$/tests/test_serialize.py" />
     </list>
     <ignored path="edgenews.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,7 +26,7 @@
       <file leaf-file-name="resources.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/edgenews/api/resources.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="960">
+            <state relative-caret-position="1320">
               <caret line="42" column="65" selection-start-line="42" selection-start-column="65" selection-end-line="42" selection-end-column="65" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
@@ -41,8 +38,8 @@
       <file leaf-file-name="test_api.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/integration/test_api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1150">
-              <caret line="48" column="26" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
+            <state relative-caret-position="350">
+              <caret line="51" column="51" selection-start-line="51" selection-start-column="51" selection-end-line="51" selection-end-column="51" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -53,10 +50,10 @@
       <file leaf-file-name="serialize.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/edgenews/api/serialize.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+            <state relative-caret-position="640">
+              <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
               <folding>
-                <element signature="e#0#45#0" expanded="true" />
+                <element signature="e#0#41#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -82,9 +79,9 @@
       <list>
         <option value="$PROJECT_DIR$/edgenews/core/user.py" />
         <option value="$PROJECT_DIR$/edgenews/interact.py" />
-        <option value="$PROJECT_DIR$/tests/integration/test_api.py" />
         <option value="$PROJECT_DIR$/tests/test_serialize.py" />
         <option value="$PROJECT_DIR$/edgenews/api/resources.py" />
+        <option value="$PROJECT_DIR$/tests/integration/test_api.py" />
         <option value="$PROJECT_DIR$/edgenews/api/serialize.py" />
       </list>
     </option>
@@ -484,16 +481,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/integration/test_api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1150">
-          <caret line="48" column="26" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_serialize.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -504,7 +491,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/edgenews/api/resources.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
+        <state relative-caret-position="1320">
           <caret line="42" column="65" selection-start-line="42" selection-start-column="65" selection-end-line="42" selection-end-column="65" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
@@ -512,12 +499,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tests/integration/test_api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="51" column="51" selection-start-line="51" selection-start-column="51" selection-end-line="51" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/edgenews/api/serialize.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+        <state relative-caret-position="640">
+          <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
           <folding>
-            <element signature="e#0#45#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
