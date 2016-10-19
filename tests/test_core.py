@@ -19,18 +19,18 @@ def corrupt_new_users():
 
 @pytest.fixture
 def prepared_user(some_new_user):
-    return core.user.prepare_user(some_new_user)
+    return core.user.init(some_new_user)
 
 @pytest.mark.core
-def test_is_valid_user(some_new_user):
+def test_is_valid(some_new_user):
     assert core.user.is_valid_new_user(some_new_user)
 
 @pytest.mark.core
-def test_is_valid_user_fail(corrupt_new_users):
+def test_is_valid_fail(corrupt_new_users):
     for user in corrupt_new_users:
         assert not core.user.is_valid_new_user(user)
 
 @pytest.mark.core
 def test_user_prepared(prepared_user):
     print(prepared_user)
-    assert core.user.is_valid_user(prepared_user)
+    assert core.user.is_valid(prepared_user)

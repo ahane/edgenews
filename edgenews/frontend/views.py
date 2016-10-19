@@ -65,7 +65,7 @@ def signup2():
 def login():
     form = forms.LoginForm()
     if form.validate_on_submit():
-        user, msg = user_manager.authenticate_user(form.name.data, form.plain_password.data)
+        user, msg = user_manager.authenticate(form.name.data, form.plain_password.data)
         if user is not None and msg == 'ok':
             login_user(user)
             return flask.render_template('success.html', user=user)

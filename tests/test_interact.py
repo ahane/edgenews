@@ -67,15 +67,15 @@ def test_create_user_fail(some_new_user, user_store):
     assert len(user_store._records) == 1
 
 
-# def test_authenticate_user(some_new_user, user_store):
+# def test_authenticate(some_new_user, user_store):
 #     name, pwd = some_new_user['name'], some_new_user['plain_password']
-#     user, msg = interact.UserManager().authenticate_user(name, pwd)
+#     user, msg = interact.UserManager().authenticate(name, pwd)
 #     assert user
 #     assert msg == 'ok'
 #
 #
-# def test_authenticate_user_fail(some_new_user, user_store):
+# def test_authenticate_fail(some_new_user, user_store):
 #     name, pwd = some_new_user['name'], 'wrongpassword'
-#     user, msg = interact.UserManager().authenticate_user(name, pwd)
+#     user, msg = interact.UserManager().authenticate(name, pwd)
 #     assert user == None
 #     assert msg == 'could not authenticate'

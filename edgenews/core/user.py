@@ -23,11 +23,11 @@ class UserSchema(BaseUserSchema):
     is_active = fields.Bool(required=True)
 
 
-def _is_valid(record, validator):
+def _is_valid(record, schema):
     """
     Returns: bool
     """
-    data, errors = validator(record)
+    data, errors = schema().load(record)
     is_valid = (errors == {})
     return is_valid
 
@@ -35,10 +35,10 @@ def is_valid_new_user(user):
     """
     Returns: bool
     """
-    return _is_valid(user, NewUserSchema().load)
+    return _is_valid(user, NewUserSchema)
 
-def is_valid_user(user):
-    return _is_valid(user, UserSchema().load)
+def is_valid(user):
+    return _is_valid(user, UserSchema)
 
 
 def _sha256hash(string):
@@ -51,13 +51,10 @@ def _hash_with_salt(password, salt=None):
     if salt is None:
         salt = uuid.uuid4().hex
     full = password + salt
-    print('############')
-    print(full)
     hashed = _sha256hash(full)
-    print(hashed)
     return hashed, salt
 
-def prepare_user(new_user):
+def init(new_user):
     user = dict(new_user)
     plain_password = user.pop('plain_password')
     user['hashed_password'], user['salt'] = _hash_with_salt(plain_password)
@@ -65,7 +62,7 @@ def prepare_user(new_user):
     user['is_anonymous'] = False
     return user
 
-def authenticate_user(user, password):
+def authenticate(user, password):
     hashed, _ = _hash_with_salt(password, user['salt'])
     if hashed == user['hashed_password']:
         user['is_authenticated'] = True
