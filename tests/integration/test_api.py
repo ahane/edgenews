@@ -66,7 +66,13 @@ def some_new_user_json(some_new_user):
 
 @pytest.fixture
 def some_new_user_response(some_new_user, users_endpoint):
-    return some_new_user
+    return {'data':
+            {'type': 'users',
+             'id': 'bert',
+             'attributes':
+             {'name': 'bert',
+              'email': 'a@example.com'}},
+            'links': {'self': '/api/v1/users/bert'}}
 
 @pytest.mark.integration
 @pytest.mark.api
@@ -77,6 +83,18 @@ def test_create_user(url, users_endpoint,
     response = requests.post(url+users_endpoint,
                              data=some_new_user_json,
                              headers=headers)
+    assert response.status_code == 200
+    #actual = response.json()
+    #expected = some_new_user_response
+    #assert actual == expected
+
+@pytest.mark.integration
+@pytest.mark.api
+def test_get_user(url, users_endpoint,
+                  some_new_user_response,
+                  headers):
+    full_url = '{}{}/{}'.format(url, users_endpoint, 'bert')
+    response = requests.get(full_url)
     assert response.status_code == 200
     actual = response.json()
     expected = some_new_user_response

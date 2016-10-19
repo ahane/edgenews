@@ -9,12 +9,12 @@ class UserManager:
     def create_user(self, new_user):
         stored = None
 
-        if not core.is_valid_new_user(new_user):
+        if not core.user.is_valid_new_user(new_user):
             msg = 'invalid input'
 
-        user = core.prepare_user(new_user)
-        
-        if not core.is_valid_user(user):
+        user = core.user.prepare_user(new_user)
+
+        if not core.user.is_valid_user(user):
             msg = 'couldnt prepare user'
 
         exists, exist_msg = self.user_exists(user)
@@ -59,7 +59,7 @@ class UserManager:
         user, msg = self.get_user(name)
         if msg is 'ok':
             try:
-                user = core.authenticate_user(user, password)
+                user = core.user.authenticate_user(user, password)
             except ValueError as e:
                 user = None
                 msg = 'could not authenticate'

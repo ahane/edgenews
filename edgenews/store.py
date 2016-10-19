@@ -51,7 +51,7 @@ class MemoryRepository(Repository):
 
     def save(self, record):
         record = dict(record)
-        record['id'] = self._next_id
+        record['_id'] = self._next_id
         self._records.append(record)
         self._next_id += 1
         return record

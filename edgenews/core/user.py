@@ -51,7 +51,10 @@ def _hash_with_salt(password, salt=None):
     if salt is None:
         salt = uuid.uuid4().hex
     full = password + salt
+    print('############')
+    print(full)
     hashed = _sha256hash(full)
+    print(hashed)
     return hashed, salt
 
 def prepare_user(new_user):
