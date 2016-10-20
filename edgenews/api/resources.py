@@ -18,21 +18,31 @@ class ApiResource(Resource):
 
 class UsersResource(Resource):
 
+    @serialize.add_status_code
     def get(self):
-        serialized = serialize.users(user_manager.list_users())
 
-        return serialized
+        response = serialize.users_to_response(user_manager.list_users())
 
+        return response
+
+    @serialize.add_status_code
     def post(self):
-        serialized = serialize.users(user_manager.create_user(flask.request.get_json()))
-        return serialized
 
+        try:
+            new_user = serialize.deserialize_user(flask.request.get_json())
+            response = serialize.users_to_response(user_manager.create_user(new_user))
+
+        except serialize.ValidationError as err:
+            response = serialize.add_error_details(err.messages)
+
+        return response
 
 class UserResource(Resource):
 
+    @serialize.add_status_code
     def get(self, name):
-        serialized = serialize.users(user_manager.get_user(name))
-        return serialized
+        response = serialize.users_to_response(user_manager.get_user(name))
+        return response
 
 
 api_object.add_resource(ApiResource, '/')
