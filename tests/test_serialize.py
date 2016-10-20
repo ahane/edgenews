@@ -70,12 +70,12 @@ def test_get_status_code_200(new_user_jsonapi):
     assert actual == expected
 
 def test_get_status_code_200(new_user_jsonapi):
-    actual = serialize.get_status_code(new_user_jsonapi)
+    actual = serialize._get_status_code(new_user_jsonapi)
     expected = 200
     assert actual == expected
 
 def test_get_status_code_error(corrupt_new_user_response):
-    actual = serialize.get_status_code(corrupt_new_user_response)
+    actual = serialize._get_status_code(corrupt_new_user_response)
     expected = 400
     assert actual == expected
 

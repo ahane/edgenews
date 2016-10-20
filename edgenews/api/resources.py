@@ -21,7 +21,8 @@ class UsersResource(Resource):
     @serialize.add_status_code
     def get(self):
 
-        response = serialize.users_to_response(user_manager.list_users())
+        users = user_manager.list_users()
+        response = serialize.users_to_response(users)
 
         return response
 
@@ -30,10 +31,11 @@ class UsersResource(Resource):
 
         try:
             new_user = serialize.deserialize_user(flask.request.get_json())
-            response = serialize.users_to_response(user_manager.create_user(new_user))
+            user = user_manager.create_user(new_user)
+            response = serialize.users_to_response(user)
 
         except serialize.ValidationError as err:
-            response = serialize.add_error_details(err.messages)
+            response = serialize.error_to_response(err)
 
         return response
 
@@ -41,7 +43,10 @@ class UserResource(Resource):
 
     @serialize.add_status_code
     def get(self, name):
-        response = serialize.users_to_response(user_manager.get_user(name))
+
+        user = user_manager.get_user(name)
+        response = serialize.users_to_response(user)
+
         return response
 
 
