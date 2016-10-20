@@ -68,27 +68,24 @@ def some_new_user_json(some_new_user):
 @pytest.fixture
 def some_new_user_response(some_new_user, users_endpoint):
     return {'links': {'self': '/api/v1/users/bert'},
-            'data':
-            {'type': 'users',
-             'id': 'bert',
-             'links': {'self': '/api/v1/users/bert'},
-             'attributes':
-                {'name': 'bert',
-                 'email': 'a@example.com'}
-            }}
+            'data': {
+                    'type': 'users',
+                     'id': 'bert',
+                     'links': {'self': '/api/v1/users/bert'},
+                     'attributes': {'name': 'bert', 'email': 'a@example.com'}
+                    }
+           }
 
 @pytest.fixture
 def all_users_response(some_new_user, users_endpoint):
     return {'links': {'self': '/api/v1/users'},
-            'data': [
-                {'type': 'users',
-                 'id': 'bert',
-                 'links': {'self': '/api/v1/users/bert'},
-                 'attributes':
-                    {'name': 'bert',
-                     'email': 'a@example.com'}
-                }]
-            }
+            'data': [{
+                    'type': 'users',
+                    'id': 'bert',
+                    'links': {'self': '/api/v1/users/bert'},
+                    'attributes': {'name': 'bert', 'email': 'a@example.com'}
+                    }]
+           }
 
 @pytest.mark.integration
 @pytest.mark.api

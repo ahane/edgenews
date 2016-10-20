@@ -1,14 +1,10 @@
 import flask
-from flask_restful import Resource, Api, fields, marshal
-import marshmallow_jsonapi as marsh
+from flask_restful import Resource, Api
 from edgenews import interact
-from edgenews.core.user import BaseUserSchema
 from edgenews.api import serialize
 blueprint = flask.Blueprint('api', __name__, url_prefix='/api/v1')
 api_object = Api(blueprint)
 user_manager = interact.UserManager()
-
-
 
 
 class ApiResource(Resource):
@@ -18,8 +14,6 @@ class ApiResource(Resource):
         return {'links':
                 {'users':
                 api_object.url_for(UsersResource)}}
-
-
 
 
 class UsersResource(Resource):
@@ -34,9 +28,6 @@ class UsersResource(Resource):
         return serialized
 
 
-
-
-
 class UserResource(Resource):
 
     def get(self, name):
@@ -49,12 +40,3 @@ api_object.add_resource(ApiResource, '/')
 api_object.add_resource(UsersResource, '/users', endpoint='users_resource')
 
 api_object.add_resource(UserResource, '/users/<string:name>', endpoint='user_resource')
-
-
-
-def _serialize(record, schema):
-    return schema().dump(record).data
-
-def serialize_user(user):
-    user['id'] = user['name']
-    return _serialize(user, BaseUserSchema)
