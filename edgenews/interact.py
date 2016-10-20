@@ -1,5 +1,6 @@
-from edgenews import core
-from edgenews import store
+# -*- coding: utf-8 -*-
+from edgenews import core, store
+
 
 class UserManager:
 

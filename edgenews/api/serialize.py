@@ -1,10 +1,12 @@
+# -*- coding: utf-8 -*-
 from functools import wraps
-
-from edgenews.core.user import UserSchema, NewUserSchema
 
 from marshmallow_jsonapi.flask import Schema as JsonAPISchema
 from marshmallow_jsonapi import fields
 from marshmallow import ValidationError
+
+from edgenews.core.user import UserSchema, NewUserSchema
+
 
 class SerializeUserSchema(JsonAPISchema, UserSchema):
 
@@ -36,7 +38,7 @@ def _fix_string_errors(validation_error_messages):
 
         else:
             proper = error
-            
+
         fixed_errors.append(proper)
 
     return {'errors': fixed_errors}
@@ -77,15 +79,21 @@ def _add_error_details(validation_error_messages):
 def deserialize_user(json_api_request):
 
     result = SerializeNewUserSchema(strict=True).load(json_api_request)
+
     return result.data
 
 
 def _users(user):
 
-    return _serialize(user,
-                      id_field='name',
-                      fields=['name', 'email'],
+    ID_FIELD = 'name'
+    FIELDS = ['name', 'email']
+
+    serialized = _serialize(user,
+                      id_field=ID_FIELD,
+                      fields=FIELDS,
                       schema=UserSchema)
+
+    return serialized
 
 
 _ERROR_MAPPING = {
@@ -97,8 +105,9 @@ _ERROR_MAPPING = {
          'title': 'User Already Exists'},
     }
 
-_UNKNOWN_ERROR = {'status': '500',
-                  'title': 'An Unknown Error Occurred'}
+_UNKNOWN_ERROR = {
+    'status': '500',
+    'title': 'An Unknown Error Occurred'}
 
 def _msg(msg):
 

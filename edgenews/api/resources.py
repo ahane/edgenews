@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
 import flask
 from flask_restful import Resource, Api
+
 from edgenews import interact
 from edgenews.api import serialize
+
 blueprint = flask.Blueprint('api', __name__, url_prefix='/api/v1')
 api_object = Api(blueprint)
 user_manager = interact.UserManager()
@@ -25,6 +28,7 @@ class UsersResource(Resource):
         response = serialize.users_to_response(users)
 
         return response
+
 
     @serialize.add_status_code
     def post(self):
