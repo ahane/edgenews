@@ -61,7 +61,7 @@ def endpoint_response(users_endpoint):
 
 
 @pytest.fixture
-def user_empty_response(users_endpoint):
+def users_empty_response(users_endpoint):
 
     return {'data': [], 'links': {'self': users_endpoint}}
 
@@ -155,9 +155,10 @@ def corrupt_new_user_conflict_response():
 @pytest.mark.integration
 @pytest.mark.api
 def test_api_start(url, endpoint, endpoint_response):
-    response = requests.get(url + endpoint).json()
 
-    actual = response
+    response = requests.get(url + endpoint)
+
+    actual = response.json()
     expected = endpoint_response
 
     assert actual == expected
@@ -167,6 +168,7 @@ def test_api_start(url, endpoint, endpoint_response):
 @pytest.mark.integration
 @pytest.mark.api
 def test_users_empty(url, users_endpoint, users_empty_response):
+    
     response = requests.get(url + users_endpoint)
 
     actual = response.json()
